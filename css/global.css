@@ -1,0 +1,380 @@
+/*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+.modal.left .modal-dialog,
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 400px;
+    /* width: 320px; */
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+    -ms-transform: translate3d(0%, 0, 0);
+    -o-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+}
+
+.modal.left .modal-content,
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal.left .modal-body,
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+/*Left*/
+.modal.left.fade .modal-dialog {
+    left: -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+    -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+    -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+    transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal.left.fade.show .modal-dialog {
+    left: 0;
+}
+
+/*Right*/
+.modal.right.fade .modal-dialog {
+    right: -320px;
+    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+    transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.right.fade.show .modal-dialog {
+    right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+.modal-content {
+    border-radius: 0;
+    border: none;
+}
+
+.modal-header {
+    border-bottom-color: #EEEEEE;
+    background-color: #FAFAFA;
+}
+
+/* ---------------- */
+
+.full-width-div {
+    position: absolute !important;
+    /* width   : 100%; */
+    /* height: 100vh; */
+    left    : 0;
+    right   : 0;
+}
+
+/*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+
+.modal.top .modal-dialog,
+.modal.left .modal-dialog,
+.modal.right .modal-dialog {
+    position         : fixed;
+    margin           : auto;
+    width            : 100%;
+    /* width         : 320px; */
+    height           : 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+    -ms-transform    : translate3d(0%, 0, 0);
+    -o-transform     : translate3d(0%, 0, 0);
+    transform        : translate3d(0%, 0, 0);
+}
+
+.modal.top .modal-content,
+.modal.left .modal-content,
+.modal.right .modal-content {
+    height    : 100%;
+    overflow-y: auto;
+}
+
+
+/*.modal.top .modal-body,*/
+
+.modal.left .modal-body,
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+
+/*Top*/
+
+.modal.top.fade .modal-dialog {
+    top               : -768px;
+    -webkit-transition: opacity 0.3s linear, top 0.3s ease-out;
+    -moz-transition   : opacity 0.3s linear, top 0.3s ease-out;
+    -o-transition     : opacity 0.3s linear, top 0.3s ease-out;
+    transition        : opacity 0.3s linear, top 0.3s ease-out;
+}
+
+.modal.top.fade.show .modal-dialog {
+    top    : 0;
+    /* left: auto; */
+}
+
+
+/*Left*/
+
+.modal.left.fade .modal-dialog {
+    left              : -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+    -moz-transition   : opacity 0.3s linear, left 0.3s ease-out;
+    -o-transition     : opacity 0.3s linear, left 0.3s ease-out;
+    transition        : opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal.left.fade.show .modal-dialog {
+    left: 0;
+}
+
+
+/*Right*/
+
+.modal.right.fade .modal-dialog {
+    right             : -320px;
+    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -moz-transition   : opacity 0.3s linear, right 0.3s ease-out;
+    -o-transition     : opacity 0.3s linear, right 0.3s ease-out;
+    transition        : opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.right.fade.show .modal-dialog {
+    right: 0;
+}
+
+.bolinha-piscando {
+    /* transform: translateY(-50%); */
+    width: 14px;
+    height: 14px;
+    background-color: #ffcf03;
+    border-radius: 50%;
+    animation: piscar 1s infinite;
+    margin-right: 6px
+}
+
+@keyframes piscar {
+    0% {
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0
+    }
+}
+
+.cabecalho-rastro {
+    display: flex;
+    padding-bottom: 0;
+    justify-content: left
+}
+
+.cabecalho-content {
+    margin-left: 30px;
+    padding-bottom: 20px
+}
+
+.cabecalho-rastro p {
+    font-weight: 600;
+    font-family: Arial,Helvetica,sans-serif;
+    letter-spacing: .1pt
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.ship-steps .step {
+    display: flex;
+    padding-bottom: 0
+}
+
+.step-content {
+    margin-left: 30px;
+    padding-bottom: 20px
+}
+
+.text {
+    width: 100%;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+.text-head {
+    font-size: .8rem;
+    font-weight: 700;
+    color: #00416b
+}
+
+.text-content {
+    font-size: .75rem;
+    font-weight: 400;
+    color: #222;
+    margin-top: .4rem
+}
+
+.arrow-current {
+    border-right: 2.5px solid #ffc40c
+}
+
+.arrow-current,.arrow-none {
+    height: auto;
+    width: 21px
+}
+
+.arrow-dashed {
+    height: 82px;
+    border-right: 1.5px dashed #878787;
+    width: 21px
+}
+
+.step-img {
+    height: 40px;
+    width: 40px
+}
+
+.step-img-icone {
+    border-radius: 100%;
+    object-fit: scale-down
+}
+
+.circle,.step-img-icone {
+    background-color: #ddd;
+    height: 40px;
+    width: 40px
+}
+
+.circle {
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative
+}
+
+.circle .circle-img {
+    position: absolute;
+    top: 5px;
+    background-color: #ddd
+}
+
+.circle .circle-img,.circle-p {
+    width: 30px;
+    height: 30px;
+    left: 5px
+}
+
+.circle-p {
+    background-color: #878787;
+    border-radius: 50%;
+    overflow: hidden
+}
+
+.bola,.circle-p {
+    position: relative
+}
+
+.bola {
+    height: 2vh;
+    width: 2vh;
+    box-sizing: border-box;
+    border: .3vh solid;
+    left: 1.1vh;
+    background-color: #fff
+}
+
+.bola,.bola3 {
+    border-radius: 50%
+}
+
+.bola3 {
+    width: 1vh;
+    height: 1vh;
+    left: .2vh;
+    top: .2vh;
+    position: relative;
+    background-color: blue
+}
+
+p {
+    font-family: Verdana,Geneva,Tahoma,sans-serif;
+    letter-spacing: -.4pt;
+    word-spacing: .8pt;
+    line-height: 1.4;
+    padding-bottom: .1rem
+}
+
+.btn-ver-mais {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 15px
+}
+
+.btn-rastro {
+    height: 20%;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-right: 5px
+}
+
+@media (max-width: 320px) {
+    .text-head {
+        font-size:.7rem
+    }
+
+    .text-content {
+        font-size: .65rem
+    }
+
+    .step-img {
+        height: 35px;
+        width: 35px
+    }
+
+    .arrow-current,.arrow-dashed,.arrow-none {
+        width: 18px
+    }
+
+    .step-content {
+        margin-left: 23px
+    }
+
+    .circle,.step-img-icone {
+        height: 35px;
+        width: 35px
+    }
+
+    .circle .circle-img {
+        width: 25px;
+        height: 25px
+    }
+
+    .btn-ver-mais {
+        margin-left: 10px
+    }
+}
+
+@media (min-width: 768px) {
+    .btn-rastro {
+        width:30%;
+        margin-bottom: 0;
+        margin-right: 5px
+    }
+}
